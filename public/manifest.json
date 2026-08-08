@@ -1,0 +1,19 @@
+{
+  "name": "Nguyen Tran Gia Si - Dev Portfolio",
+  "short_name": "GiaSi Dev Portfolio",
+  "description": "Full Stack Developer Portfolio - Spring Boot & React Expert",
+  "theme_color": "#1e293b",
+  "background_color": "#0f172a",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
