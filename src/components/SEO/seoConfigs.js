@@ -1,44 +1,58 @@
 // Predefined SEO configurations for different pages
 export const SEO_CONFIGS = {
   home: {
-    title: "GiaSi Dev Portfolio - Full Stack Developer | React, Java, Spring Boot",
-    description: "Welcome to GiaSi's dev portfolio. Professional Full Stack Developer with expertise in Java, Spring Boot, React, and modern web technologies. Explore my projects and skills.",
-    keywords: "portfolio, full stack developer, java developer, react developer, spring boot, javascript, web development, software engineer",
-    url: "https://nguyentrangiasi.id.vn/"
+    title: "Mutia Nandhika's Portfolio",
+    description:
+      "Welcome to Mutia Nandhika's portfolio. Explore selected projects, experience, skills, and digital work.",
+    keywords:
+      "Mutia Nandhika, portfolio, UI/UX Design, Software Engineering, Graphic Design, Figma, Laravel, PHP, JavaScript, Vue.js, Flutter, MySQL, Web Development",
+    url: "https://portfolio-mutia-nandhika.vercel.app/",
   },
-  
+
   about: {
-    title: "About Me - GiaSi Dev Portfolio | Full Stack Developer",
-    description: "Learn about GiaSi, a passionate Full Stack Developer with experience in Java, Spring Boot, React, and modern web technologies. Discover my journey and expertise.",
-    keywords: "about, full stack developer, java developer, react developer, software engineer, programming experience",
-    url: "https://nguyentrangiasi.id.vn/about"
+    title: "About | Mutia Nandhika's Portfolio",
+    description:
+      "Learn more about Mutia Nandhika, an Informatics graduate with experience in UI/UX Design, Graphic Design, Web Development, and Software Engineering.",
+    keywords:
+      "Mutia Nandhika, about, portfolio, UI/UX Design, Graphic Design, Software Engineering, Web Development, Informatics",
+    url: "https://portfolio-mutia-nandhika.vercel.app/about",
   },
-  
+
   projects: {
-    title: "Projects - GiaSi Dev Portfolio | Web Development Showcase",
-    description: "Explore GiaSi's dev portfolio of web development projects. Full stack applications built with Java, Spring Boot, React, and modern technologies.",
-    keywords: "projects, portfolio, web development, java projects, react projects, spring boot, full stack applications",
-    url: "https://nguyentrangiasi.id.vn/projects"
+    title: "Projects | Mutia Nandhika's Portfolio",
+    description:
+      "Explore selected UI/UX Design, Web Development, Mobile Development, and Graphic Design projects by Mutia Nandhika.",
+    keywords:
+      "Mutia Nandhika projects, UI/UX projects, web development projects, mobile development, graphic design, Figma, Laravel, JavaScript",
+    url: "https://portfolio-mutia-nandhika.vercel.app/projects",
   },
-  
+
   techStack: {
-    title: "Tech Stack - GiaSi Dev Portfolio | Technologies & Tools",
-    description: "Explore GiaSi's comprehensive technology stack including Java, Spring Boot, React, databases, cloud tools and development frameworks used in modern projects.",
-    keywords: "tech stack, technologies, java, spring boot, react, mysql, mongodb, docker, git, development tools, programming languages",
-    url: "https://nguyentrangiasi.id.vn/tech-stack"
+    title: "Tech Stack | Mutia Nandhika's Portfolio",
+    description:
+      "Explore the technologies, design tools, and development skills used by Mutia Nandhika across UI/UX, web, and mobile projects.",
+    keywords:
+      "Mutia Nandhika tech stack, Figma, Laravel, PHP, JavaScript, Vue.js, Flutter, MySQL, Git, REST API, web development",
+    url: "https://portfolio-mutia-nandhika.vercel.app/tech-stack",
   },
-  
+
   resume: {
-    title: "Resume - GiaSi Dev Portfolio | Full Stack Developer CV",
-    description: "View GiaSi's professional resume and CV. Full Stack Developer with expertise in Java, Spring Boot, React, and modern web development technologies.",
-    keywords: "resume, cv, full stack developer, java developer, react developer, software engineer, professional experience",
-    url: "https://nguyentrangiasi.id.vn/resume"
+    title: "Resume | Mutia Nandhika's Portfolio",
+    description:
+      "View Mutia Nandhika's professional experience, education, certifications, leadership activities, and skills.",
+    keywords:
+      "Mutia Nandhika resume, CV, experience, education, certifications, UI/UX Designer, Software Engineer, Informatics",
+    url: "https://portfolio-mutia-nandhika.vercel.app/resume",
   },
-  
+
   contact: {
-    title: "Contact - GiaSi Dev Portfolio | Get In Touch",
-    description: "Get in touch with GiaSi for web development projects, collaborations, or job opportunities. Professional Full Stack Developer available for hire.",
-    keywords: "contact, hire developer, full stack developer, web development services, java developer, react developer",
-    url: "https://nguyentrangiasi.id.vn/contact"
-  }
+    title: "Contact | Mutia Nandhika's Portfolio",
+    description:
+      "Get in touch with Mutia Nandhika for professional opportunities, collaborations, UI/UX Design, Graphic Design, and software development projects.",
+    keywords:
+      "Mutia Nandhika contact, UI/UX Designer, Software Engineer, Graphic Designer, collaboration, job opportunities",
+    url: "https://portfolio-mutia-nandhika.vercel.app/contact",
+  },
 };
+
+export default SEO_CONFIGS;

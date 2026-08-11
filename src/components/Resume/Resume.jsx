@@ -1,541 +1,2480 @@
-import { useState, useCallback, useMemo } from 'react'
-import { FaDownload, FaEye, FaFilePdf, FaSpinner, FaGraduationCap, FaBriefcase, FaCertificate, FaAward } from 'react-icons/fa'
-import SEOHead from '../SEO/SEOHead'
-import { SEO_CONFIGS } from '../SEO/seoConfigs'
-import { motion, AnimatePresence } from 'framer-motion'
+import {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+} from "react";
+
+import {
+  FaEye,
+  FaGraduationCap,
+  FaBriefcase,
+  FaUsers,
+  FaPalette,
+  FaCode,
+  FaImages,
+  FaTimes,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa";
+
+import SEOHead from "../SEO/SEOHead";
+import { SEO_CONFIGS } from "../SEO/seoConfigs";
+
+// Featured Certifications & Recognition
+import Certifications from "../Certifications/Certifications";
+
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
+
 
 function Resume() {
-  const [showPDF, setShowPDF] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [pdfError, setPdfError] = useState(false)
 
-  // Use useCallback to prevent unnecessary re-renders
-  const handleViewPDF = useCallback(() => {
-    setIsLoading(true)
-    setPdfError(false)
-    // Reduced loading time for better UX
-    setTimeout(() => {
-      setIsLoading(false)
-      setShowPDF(true)
-    }, 500)
-  }, [])
+  /*
+   * ============================================================
+   * STATE
+   * ============================================================
+   */
 
-  const handleDownloadPDF = useCallback(() => {
-    const link = document.createElement('a')
-    link.href = '/documents/NguyenTranGiaSi_Intern_Backend_Developer.pdf'
-    link.download = 'NguyenTranGiaSi_Intern_Backend_Developer.pdf'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }, [])
+  const [selectedImage, setSelectedImage] =
+    useState(null);
 
-  // Memoize static data for performance - Updated with real resume content
-  const experiences = useMemo(() => [
-    {
-      title: "Team Leader & Fullstack Developer",
-      company: "Nexatech – E-Commerce Platform",
-      period: "March 2026 - Present",
-      location: "Ho Chi Minh City, Vietnam",
-      achievements: [
-        "Architected a scalable e-commerce system using Micro Frontend (Next.js Module Federation) and Microservice patterns",
-        "Led a team of 4 developers with independently deployable services (Auth, Blog, Host App)",
-        "Tech stack: Next.js, React, TypeScript, TailwindCSS (Frontend); Spring Boot microservices, RESTful APIs, JWT (Backend)",
-        "Implemented user authentication, product catalog, shopping cart, order management, blog module, and admin dashboard"
-      ]
+  const [selectedImageIndex, setSelectedImageIndex] =
+    useState(0);
+
+  const [selectedDocumentation, setSelectedDocumentation] =
+    useState([]);
+
+
+  /*
+   * ============================================================
+   * DOCUMENTATION HANDLERS
+   * ============================================================
+   */
+
+  const openDocumentation = useCallback(
+    (documentation, index = 0) => {
+
+      if (
+        !documentation ||
+        documentation.length === 0
+      ) {
+        return;
+      }
+
+      setSelectedDocumentation(
+        documentation
+      );
+
+      setSelectedImageIndex(index);
+
+      setSelectedImage(
+        documentation[index]
+      );
     },
-    {
-      title: "Team Leader & Fullstack Developer",
-      company: "Chatly – Real-time Messaging Platform",
-      period: "March 2026 - Present",
-      location: "Ho Chi Minh City, Vietnam",
-      achievements: [
-        "Built a scalable real-time messaging platform supporting 1–1 and group chat",
-        "Backend: Spring Boot, WebSocket (STOMP), PostgreSQL, MongoDB, and Redis",
-        "Mobile: React Native (Expo) + React, TypeScript, TailwindCSS",
-        "Features: real-time messaging, presence & typing indicators, media upload (S3), and read receipts"
-      ]
-    },
-    {
-      title: "Fullstack Developer",
-      company: "Personal Projects",
-      period: "April 2025 - Present",
-      location: "Ho Chi Minh City, Vietnam",
-      achievements: [
-        "Developed Portfolio website showcasing web development skills using React 19 and TailwindCSS 4",
-        "Built CodeHub platform for developers to share and collaborate on code snippets with real-time features",
-        "Created NatureGrain e-commerce platform for organic food retail with complete admin dashboard",
-        "Implemented modern technologies including Spring Boot, JWT security, and cloud services integration"
-      ]
-    },
-    {
-      title: "Backend Developer (CodeHub Project)",
-      company: "Personal Development",
-      period: "June 2025 - July 2025",
-      location: "Ho Chi Minh City, Vietnam",
-      achievements: [
-        "Built full-stack platform using Spring Boot (Java 23) and Spring Security with JWT authentication",
-        "Implemented RESTful APIs and WebSocket for real-time collaboration features",
-        "Integrated MariaDB/MySQL database with comprehensive data modeling",
-        "Added multi-language snippet support (70+) and notification system with Cloudinary integration"
-      ]
+    []
+  );
+
+
+  const closeDocumentation =
+    useCallback(() => {
+
+      setSelectedImage(null);
+
+      setSelectedDocumentation([]);
+
+      setSelectedImageIndex(0);
+
+    }, []);
+
+
+  const nextImage = useCallback(() => {
+
+    if (
+      !selectedDocumentation.length
+    ) {
+      return;
     }
-  ], []);
 
-  // Education data - also memoized with real information
-  const education = useMemo(() => [
-    {
-      degree: "Bachelor of Software Engineering",
-      institution: "IUH - Industrial University of Ho Chi Minh City",
-      period: "August 2022 - Present",
-      location: "Ho Chi Minh City, Vietnam",
-      gpa: "3.44/4.0",
-      details: "Final-year Software Engineering student with solid experience in Java and Spring Boot. Passionate about backend development, database design, and building scalable applications."
+    const nextIndex =
+      (selectedImageIndex + 1) %
+      selectedDocumentation.length;
+
+    setSelectedImageIndex(
+      nextIndex
+    );
+
+    setSelectedImage(
+      selectedDocumentation[nextIndex]
+    );
+
+  }, [
+    selectedDocumentation,
+    selectedImageIndex,
+  ]);
+
+
+  const previousImage =
+    useCallback(() => {
+
+      if (
+        !selectedDocumentation.length
+      ) {
+        return;
+      }
+
+      const previousIndex =
+        (
+          selectedImageIndex -
+          1 +
+          selectedDocumentation.length
+        ) %
+        selectedDocumentation.length;
+
+      setSelectedImageIndex(
+        previousIndex
+      );
+
+      setSelectedImage(
+        selectedDocumentation[
+          previousIndex
+        ]
+      );
+
+    }, [
+      selectedDocumentation,
+      selectedImageIndex,
+    ]);
+
+
+  /*
+   * ============================================================
+   * KEYBOARD CONTROL
+   * ============================================================
+   */
+
+  useEffect(() => {
+
+    const handleKeyDown = (event) => {
+
+      if (!selectedImage) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        closeDocumentation();
+      }
+
+      if (event.key === "ArrowRight") {
+        nextImage();
+      }
+
+      if (event.key === "ArrowLeft") {
+        previousImage();
+      }
+    };
+
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+
+    return () => {
+
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
+    };
+
+  }, [
+    selectedImage,
+    closeDocumentation,
+    nextImage,
+    previousImage,
+  ]);
+
+
+  /*
+   * ============================================================
+   * PREVENT BODY SCROLL WHEN MODAL IS OPEN
+   * ============================================================
+   */
+
+  useEffect(() => {
+
+    if (selectedImage) {
+
+      document.body.style.overflow =
+        "hidden";
+
+    } else {
+
+      document.body.style.overflow =
+        "";
+
     }
-  ], []);
-
-  // Certifications - memoized with real project-based accomplishments
-  const certifications = useMemo(() => [
-    {
-      name: "Java Backend Development",
-      issuer: "Self-Study & Practice",
-      year: "2024-2025",
-      details: "Spring Boot, Spring Security, Spring Data JPA expertise demonstrated through multiple projects"
-    },
-    {
-      name: "Full Stack Web Development",
-      issuer: "Project-Based Learning",
-      year: "2025",
-      details: "React 19, TailwindCSS 4, Modern JavaScript, RESTful APIs development"
-    },
-    {
-      name: "Database Design & Management",
-      issuer: "Practical Implementation",
-      year: "2025",
-      details: "MySQL, MariaDB, MongoDB, and Neo4J through CodeHub and NatureGrain projects"
-    }
-  ], []);
-
-  // Awards & Scholarships - memoized with actual achievements
-  const awards = useMemo(() => [
-    {
-      title: "Academic Excellence Scholarship",
-      issuer: "Industrial University of Ho Chi Minh City",
-      year: "2024",
-      type: "Full Scholarship (100%)",
-      achievement: "GPA 3.75/4.0",
-      description: "Awarded full tuition scholarship for outstanding academic performance"
-    },
-    {
-      title: "Academic Excellence Scholarship", 
-      issuer: "Industrial University of Ho Chi Minh City",
-      year: "2023",
-      type: "Partial Scholarship (50%)",
-      achievement: "GPA 3.62/4.0",
-      description: "Recognized for consistent high academic achievement"
-    },
-    {
-      title: "Academic Excellence Scholarship",
-      issuer: "Industrial University of Ho Chi Minh City", 
-      year: "2022",
-      type: "Partial Scholarship (70%)",
-      achievement: "GPA 3.50/4.0",
-      description: "First-year excellence recognition in Software Engineering program"
-    }
-  ], []);
 
 
+    return () => {
+
+      document.body.style.overflow =
+        "";
+
+    };
+
+  }, [selectedImage]);
+
+
+  /*
+   * ============================================================
+   * WORK EXPERIENCE
+   * ============================================================
+   */
+
+  const experiences = useMemo(
+    () => [
+      {
+        title:
+          "Graphic Designer Intern",
+
+        company:
+          "PT Rasa Aksata Nusantara (Duluin Group)",
+
+        period:
+          "Aug 2025 – Dec 2025",
+
+        location:
+          "Bandung, Indonesia",
+
+        icon: <FaPalette />,
+
+        achievements: [
+          "Created content plans and managed the company's social media content calendar.",
+
+          "Designed Instagram content aligned with the company's brand identity using Canva and Figma.",
+
+          "Developed company profiles in A4 document and presentation deck formats.",
+
+          "Wrote copy, captions, and informative blog articles for digital marketing purposes while creating consistent, professional, and user-friendly visual designs.",
+        ],
+
+        documentation: [
+          {
+            image:
+              "/experience/rasa-aksata/duluin3.jpg",
+          },
+
+          {
+            image:
+              "/experience/rasa-aksata/duluin6.jpg",
+          },
+
+          {
+            image:
+              "/experience/rasa-aksata/duluin7.jpg",
+          },
+        ],
+      },
+
+
+      {
+        title:
+          "UI/UX Design Intern",
+
+        company:
+          "PT Kilang Pertamina Internasional – Refinery Unit IV",
+
+        period:
+          "Jul 2024 – Aug 2024",
+
+        location:
+          "Cilacap, Indonesia",
+
+        icon: <FaPalette />,
+
+        achievements: [
+          "Designed the UI/UX for a web-based inventory management application using Figma.",
+
+          "Conducted user research and requirement gathering with internal procurement teams and external vendors.",
+
+          "Applied Design Thinking methodology from empathize to testing stages.",
+
+          "Created wireframes and high-fidelity interactive prototypes using Figma.",
+
+          "Prepared user personas, user journeys, use cases, activity diagrams, and class diagrams.",
+
+          "Conducted usability testing and iterative design improvements.",
+        ],
+
+        documentation: [
+          {
+            image:
+              "/experience/pertamina/pertamina3.JPG",
+          },
+
+          {
+            image:
+              "/experience/pertamina/pertamina2.JPG",
+          },
+
+          {
+            image:
+              "/experience/pertamina/pertamina4.JPG",
+          },
+        ],
+      },
+
+
+      {
+        title:
+          "Software Engineering Intern",
+
+        company:
+          "Dinkominfo Kabupaten Banyumas",
+
+        period:
+          "Dec 2020 – Mar 2021",
+
+        location:
+          "Purwokerto, Indonesia",
+
+        icon: <FaCode />,
+
+        achievements: [
+          "Designed the UI/UX for the Flutix mobile application, a cinema ticket booking app, using Figma.",
+
+          "Developed an Academic Information System (SIAKAD) website using the CodeIgniter 3 framework.",
+        ],
+
+        documentation: [
+          {
+            image:
+              "/experience/dinkominfo/dinkominfo1.jpg",
+          },
+        ],
+      },
+    ],
+    []
+  );
+
+
+  /*
+   * ============================================================
+   * EDUCATION
+   * ============================================================
+   */
+
+  const education = useMemo(
+    () => [
+      {
+        degree:
+          "Bachelor's Degree in Informatics",
+
+        institution:
+          "Jenderal Soedirman University",
+
+        period:
+          "2022 – 2026",
+
+        location:
+          "Purwokerto, Indonesia",
+
+        details: [
+          "Relevant Coursework: Web Programming, Systems Analysis and Design, Web Design, and Human-Computer Interaction.",
+
+          "Final Project: Development of a Web-Based Outsourcing Recruitment Information System Using the Agile Development Method at PT Mitra Daksa Anarawata.",
+        ],
+
+        documentation: [
+          {
+            image:
+              "/education/unsoed1.jpg",
+          },
+
+          {
+            image:
+              "/education/unsoed2.jpg",
+          },
+
+          {
+            image:
+              "/education/unsoed3.jpg",
+          },
+        ],
+      },
+
+
+      {
+        degree:
+          "Software Engineering",
+
+        institution:
+          "SMK Telkom Purwokerto",
+
+        period:
+          "2019 – 2022",
+
+        location:
+          "Purwokerto, Indonesia",
+
+        details: [
+          "Competency Certification: Indonesian National Qualifications Framework (KKNI) Level II in Software Engineering.",
+        ],
+
+        documentation: [
+          {
+            image:
+              "/education/telkom1.jpg",
+          },
+        ],
+      },
+    ],
+    []
+  );
+
+
+  /*
+   * ============================================================
+   * ORGANIZATIONAL EXPERIENCE
+   * ============================================================
+   */
+
+  const organizations = useMemo(
+    () => [
+      {
+        title:
+          "Minister of Research and Data",
+
+        organization:
+          "BEM UNSOED 2024",
+
+        period:
+          "Mar 2024 – Dec 2024",
+
+        location:
+          "Purwokerto, Indonesia",
+
+        achievements: [
+          "Coordinated 21 staff members across three divisions: Research and Survey, Data Analysis, and Infographics.",
+
+          "Successfully executed 10 work programs, achieving a perfect evaluation score of 100.",
+
+          "Managed digital platforms, including the organization's website and Instagram account, @dataatunsoed.",
+
+          "Successfully organized the \"Satu Data untuk Unsoed\" program, producing five high-quality surveys.",
+        ],
+
+        documentation: [
+          {
+            image:
+              "/organization/bem2.JPG",
+          },
+
+          {
+            image:
+              "/organization/bem4.JPG",
+          },
+
+          {
+            image:
+              "/organization/bem3.JPG",
+          },
+        ],
+      },
+
+
+      {
+        title:
+          "Staff Member & Treasurer, Ministry of Research and Data",
+
+        organization:
+          "BEM UNSOED 2023",
+
+        period:
+          "Mar 2023 – Dec 2023",
+
+        location:
+          "Purwokerto, Indonesia",
+
+        achievements: [
+          "Coordinated the Institutional Visit to the Banyumas Regency Statistics Agency (BPS), overseeing the planning, budgeting, and execution of the event.",
+
+          "Managed a database of the academic community at Jenderal Soedirman University by collecting data from relevant departments for public access.",
+
+          "Designed and managed Instagram content, including data visualizations based on survey results.",
+
+          "Conducted quantitative and qualitative surveys for data collection and analysis.",
+
+          "Managed the ministry's finances and operational funds.",
+        ],
+
+        documentation: [
+          {
+            image:
+              "/organization/bps1.jpeg",
+          },
+
+          {
+            image:
+              "/organization/bem231.jpg",
+          },
+
+          {
+            image:
+              "/organization/bem232.jpg",
+          },
+        ],
+      },
+    ],
+    []
+  );
+
+
+  /*
+   * ============================================================
+   * RENDER
+   * ============================================================
+   */
 
   return (
     <>
-      <SEOHead {...SEO_CONFIGS.resume} />
-      <section className="section-padding pt-28">
-        <div className="max-w-6xl mx-auto">
-          {/* Header Section */}
-          <div className="text-center mb-16">
-            <motion.div
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-effect border border-neutral-700/50 mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <FaFilePdf className="w-6 h-6 text-amber-400" />
-              <span className="text-lg font-semibold text-neutral-300">
-                Professional Resume
-              </span>
-            </motion.div>
 
-            <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+      <SEOHead
+        {...SEO_CONFIGS.resume}
+      />
+
+
+      <section className="section-padding pt-28">
+
+        <div className="max-w-6xl mx-auto px-6">
+
+
+          {/* ====================================================
+              HEADER
+          ===================================================== */}
+
+          <div className="text-center mb-16">
+
+            <motion.h1
+              className="
+                text-4xl
+                md:text-5xl
+                lg:text-6xl
+                font-bold
+                mb-4
+                text-neutral-100
+              "
+
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+
+              transition={{
+                duration: 0.6,
+                delay: 0.1,
+              }}
             >
-              My <span className="gradient-text">Resume</span>
+
+              My{" "}
+
+              <span
+                className="
+                  bg-gradient-to-r
+                  from-violet-400
+                  via-purple-500
+                  to-fuchsia-400
+                  bg-clip-text
+                  text-transparent
+                "
+              >
+                Resume
+              </span>
+
             </motion.h1>
 
-            <motion.div 
-              className="w-24 h-1.5 bg-gradient-to-r from-amber-500 to-amber-600 mx-auto mb-8 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: 96 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+
+            {/* Purple Gradient Line */}
+
+            <motion.div
+              className="
+                h-1.5
+                bg-gradient-to-r
+                from-violet-500
+                via-purple-500
+                to-fuchsia-500
+                mx-auto
+                mb-8
+                rounded-full
+              "
+
+              initial={{
+                width: 0,
+              }}
+
+              animate={{
+                width: 96,
+              }}
+
+              transition={{
+                duration: 0.8,
+                delay: 0.5,
+              }}
             />
 
-            <motion.p 
-              className="text-xl text-neutral-400 max-w-3xl mx-auto leading-relaxed mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+
+            <motion.p
+              className="
+                text-xl
+                text-neutral-400
+                max-w-3xl
+                mx-auto
+                leading-relaxed
+              "
+
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+
+              transition={{
+                duration: 0.6,
+                delay: 0.2,
+              }}
             >
-              Download my complete resume or view it online to learn more about 
-              my professional experience, skills, and achievements.
+
+              Informatics graduate focused on UI/UX Design and Software Engineering, creating user-centered digital experiences through thoughtful design and functional development.
+
             </motion.p>
 
           </div>
 
-          {/* PDF Viewer */}
-          <AnimatePresence>
-            {showPDF && (
-              <motion.div
-                className="mb-16"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 50 }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="glass-effect rounded-2xl p-8 border border-neutral-700/50">
-                  <div className="flex justify-between items-center mb-6">
-                    <div>
-                      <h3 className="text-2xl font-bold text-neutral-100">
-                        Resume Preview
-                      </h3>
-                      <p className="text-neutral-400 text-sm mt-1">
-                        NguyenTranGiaSi_Intern_JAVA_Backend.pdf
-                      </p>
-                    </div>
-                    <motion.button
-                      onClick={() => setShowPDF(false)}
-                      className="text-neutral-400 hover:text-neutral-200 text-2xl p-2 hover:bg-neutral-700/50 rounded-lg transition-all duration-300"
-                      whileHover={{ rotate: 90 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      ×
-                    </motion.button>
-                  </div>
-                  <div className="bg-neutral-800/50 rounded-xl p-4">
-                    <iframe
-                      src="/documents/NguyenTranGiaSi_Intern_JAVA_Backend.pdf#toolbar=1&navpanes=1&scrollbar=1&page=1&view=FitH"
-                      className="w-full h-[600px] rounded-lg border border-neutral-700/30"
-                      title="Resume PDF"
-                      loading="lazy"
-                      onError={() => setPdfError(true)}
-                      onLoad={() => setPdfError(false)}
-                    />
-                    
-                    {/* Fallback for browsers that don't support PDF viewing */}
-                    <div className={`text-center mt-4 p-4 bg-neutral-700/30 rounded-lg ${pdfError ? 'bg-red-900/20 border border-red-500/30' : ''}`}>
-                      <p className="text-neutral-400 text-sm mb-3">
-                        {pdfError ? 'PDF failed to load, but you can still access it!' : "Can't see the PDF? No problem!"}
-                      </p>
-                      <div className="flex gap-4 justify-center">
-                        <a
-                          href="/documents/NguyenTranGiaSi_Intern_JAVA_Backend.pdf"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-neutral-900 font-medium px-4 py-2 rounded-lg text-sm transition-colors duration-300"
-                        >
-                          <FaEye className="text-sm" />
-                          View in Browser
-                        </a>
-                        <button
-                          onClick={handleDownloadPDF}
-                          className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm transition-colors duration-300"
-                        >
-                          <FaDownload className="text-sm" />
-                          Download PDF
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
-          {/* Experience Section */}
-          <div className="mb-16">
+          {/* ====================================================
+              WORK EXPERIENCE
+          ===================================================== */}
+
+          <section className="mb-16">
+
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-effect border border-neutral-700/50 mb-6">
-                <FaBriefcase className="w-5 h-5 text-amber-400" />
-                <span className="text-lg font-semibold text-neutral-300">
+
+              <div
+                className="
+                  inline-flex
+                  items-center
+                  gap-3
+                  px-6
+                  py-3
+                  rounded-full
+                  glass-effect
+                  border
+                  border-purple-500/30
+                  mb-6
+                "
+              >
+
+                {/* ICON - SOLID PURPLE */}
+
+                <FaBriefcase
+                  className="
+                    w-5
+                    h-5
+                    text-purple-400
+                  "
+                />
+
+                <span
+                  className="
+                    text-lg
+                    font-semibold
+                    text-neutral-300
+                  "
+                >
+
                   Work Experience
+
                 </span>
+
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold gradient-text">
-                Professional Journey
+
+
+              <h2
+                className="
+                  text-3xl
+                  md:text-4xl
+                  font-bold
+                  bg-gradient-to-r
+                  from-violet-400
+                  via-purple-500
+                  to-fuchsia-400
+                  bg-clip-text
+                  text-transparent
+                "
+              >
+
+                Professional Experience
+
               </h2>
+
             </div>
+
 
             <div className="space-y-8">
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  className="glass-effect rounded-2xl p-8 border border-neutral-700/50"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  whileHover={{ 
-                    y: -5,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-neutral-100 mb-1">
-                        {exp.title}
-                      </h3>
-                      <p className="text-amber-400 font-semibold">
-                        {exp.company}
-                      </p>
-                    </div>
-                    <div className="text-neutral-400 text-sm mt-2 md:mt-0 text-right">
-                      <p>{exp.period}</p>
-                      <p>{exp.location}</p>
-                    </div>
-                  </div>
-                  <ul className="space-y-2">
-                    {exp.achievements.map((achievement, i) => (
-                      <li
-                        key={i}
-                        className="text-neutral-300 flex items-start gap-3"
+
+              {experiences.map(
+                (experience, index) => (
+
+                  <motion.div
+                    key={index}
+
+                    className="
+                      glass-effect
+                      rounded-2xl
+                      p-6
+                      md:p-8
+                      border
+                      border-neutral-700/50
+                    "
+
+                    initial={{
+                      opacity: 0,
+                      y: 30,
+                    }}
+
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+
+                    transition={{
+                      delay: index * 0.1,
+                    }}
+
+                    viewport={{
+                      once: true,
+                    }}
+
+                    whileHover={{
+                      y: -4,
+                    }}
+                  >
+
+                    {/* Experience Header */}
+
+                    <div
+                      className="
+                        flex
+                        flex-col
+                        md:flex-row
+                        md:items-start
+                        md:justify-between
+                        mb-5
+                      "
+                    >
+
+                      <div
+                        className="
+                          flex
+                          gap-4
+                        "
                       >
-                        <span className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                        {achievement}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </div>
 
-          {/* Education, Certifications & Awards */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
-            {/* Education */}
-            <div className="min-h-[600px] flex flex-col">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-effect border border-neutral-700/50 mb-4">
-                  <FaGraduationCap className="w-5 h-5 text-amber-400" />
-                  <span className="text-lg font-semibold text-neutral-300">
-                    Education
-                  </span>
-                </div>
-                <h2 className="text-2xl font-bold gradient-text">
-                  Academic Background
-                </h2>
-              </div>
+                        {/* ICON - SOLID PURPLE */}
 
-              <div className="flex-1">
-                {education.map((edu, index) => (
-                <motion.div
-                  key={index}
-                  className="glass-effect rounded-2xl p-6 border border-neutral-700/50"
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
-                  viewport={{ once: true }}
-                  whileHover={{ 
-                    scale: 1.02,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <h3 className="text-lg font-bold text-neutral-100 mb-2">
-                    {edu.degree}
-                  </h3>
-                  <p className="text-amber-400 font-semibold mb-1">
-                    {edu.institution}
-                  </p>
-                  <div className="flex justify-between items-center text-neutral-400 text-sm mb-2">
-                    <span>{edu.period}</span>
-                    <span>{edu.location}</span>
-                  </div>
-                  <p className="text-neutral-300 font-semibold mb-3">
-                    GPA: {edu.gpa}
-                  </p>
-                  {edu.details && (
-                    <p className="text-neutral-400 text-sm leading-relaxed">
-                      {edu.details}
-                    </p>
-                  )}
-                </motion.div>
-              ))}
-              </div>
-            </div>
+                        <div
+                          className="
+                            hidden
+                            sm:flex
+                            w-11
+                            h-11
+                            rounded-xl
+                            bg-purple-500/10
+                            border
+                            border-purple-500/20
+                            items-center
+                            justify-center
+                            text-purple-400
+                            flex-shrink-0
+                          "
+                        >
 
-            {/* Certifications */}
-            <div className="min-h-[600px] flex flex-col">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-effect border border-neutral-700/50 mb-4">
-                  <FaCertificate className="w-5 h-5 text-amber-400" />
-                  <span className="text-lg font-semibold text-neutral-300">
-                    Certifications
-                  </span>
-                </div>
-                <h2 className="text-2xl font-bold gradient-text">
-                  Professional Certifications
-                </h2>
-              </div>
+                          {experience.icon}
 
-              <div className="flex-1">
-                <div className="space-y-4">
-                  {certifications.map((cert, index) => (
-                  <motion.div
-                    key={index}
-                    className="glass-effect rounded-xl p-6 border border-neutral-700/50"
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ 
-                      x: 5,
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <FaAward className="text-amber-400" />
-                      <h3 className="font-bold text-neutral-100">
-                        {cert.name}
-                      </h3>
-                    </div>
-                    <p className="text-neutral-400 text-sm mb-2">
-                      {cert.issuer} • {cert.year}
-                    </p>
-                    {cert.details && (
-                      <p className="text-neutral-300 text-sm leading-relaxed">
-                        {cert.details}
-                      </p>
-                    )}
-                  </motion.div>
-                ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Awards & Scholarships */}
-            <div className="min-h-[600px] flex flex-col">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-effect border border-neutral-700/50 mb-4">
-                  <FaAward className="w-5 h-5 text-amber-400" />
-                  <span className="text-lg font-semibold text-neutral-300">
-                    Awards & Scholarships
-                  </span>
-                </div>
-                <h2 className="text-2xl font-bold gradient-text">
-                  Awards & Recognition
-                </h2>
-              </div>
-
-              <div className="space-y-4">
-                {awards.map((award, index) => (
-                  <motion.div
-                    key={index}
-                    className="glass-effect rounded-xl p-6 border border-neutral-700/50 relative overflow-hidden"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ 
-                      scale: 1.02,
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    {/* Award background gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-yellow-500/5 rounded-xl"></div>
-                    
-                    <div className="relative">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center">
-                            <FaAward className="text-white text-lg" />
-                          </div>
-                          <div>
-                            <h3 className="font-bold text-neutral-100 text-lg">
-                              {award.title}
-                            </h3>
-                            <p className="text-amber-400 text-sm font-medium">
-                              {award.type}
-                            </p>
-                          </div>
                         </div>
-                        <span className="text-neutral-400 text-sm font-medium bg-neutral-800/50 px-3 py-1 rounded-full">
-                          {award.year}
-                        </span>
-                      </div>
-                      
-                      <div className="mb-3">
-                        <p className="text-neutral-300 text-sm mb-1">
-                          <span className="font-medium">Institution:</span> {award.issuer}
-                        </p>
-                        <p className="text-amber-400 text-sm font-medium">
-                          <span className="text-neutral-300">Achievement:</span> {award.achievement}
-                        </p>
-                      </div>
-                      
-                      <p className="text-neutral-400 text-sm leading-relaxed">
-                        {award.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
 
-          {/* Call to Action */}
-          <motion.div
-            className="text-center glass-effect rounded-3xl p-12 border border-neutral-700/50"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <motion.div
-              className="w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
-              initial={{ scale: 0, rotate: -180 }}
-              whileInView={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
+
+                        <div>
+
+                          <h3
+                            className="
+                              text-xl
+                              font-bold
+                              text-neutral-100
+                              mb-1
+                            "
+                          >
+
+                            {experience.title}
+
+                          </h3>
+
+
+                          {/* Purple Gradient Accent */}
+
+                          <p
+                            className="
+                              font-semibold
+                              bg-gradient-to-r
+                              from-violet-400
+                              via-purple-500
+                              to-fuchsia-400
+                              bg-clip-text
+                              text-transparent
+                              inline-block
+                            "
+                          >
+
+                            {experience.company}
+
+                          </p>
+
+                        </div>
+
+                      </div>
+
+
+                      <div
+                        className="
+                          text-neutral-400
+                          text-sm
+                          mt-3
+                          md:mt-0
+                          md:text-right
+                        "
+                      >
+
+                        <p>
+                          {experience.period}
+                        </p>
+
+                        <p>
+                          {experience.location}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    {/* Achievements */}
+
+                    <ul className="space-y-3">
+
+                      {experience.achievements.map(
+                        (achievement, i) => (
+
+                          <li
+                            key={i}
+
+                            className="
+                              text-neutral-300
+                              text-sm
+                              md:text-base
+                              flex
+                              items-start
+                              gap-3
+                            "
+                          >
+
+                            {/* SOLID PURPLE BULLET */}
+
+                            <span
+                              className="
+                                w-2
+                                h-2
+                                bg-purple-400
+                                rounded-full
+                                mt-2
+                                flex-shrink-0
+                              "
+                            />
+
+                            <span>
+                              {achievement}
+                            </span>
+
+                          </li>
+
+                        )
+                      )}
+
+                    </ul>
+
+
+                    {/* Documentation */}
+
+                    {experience.documentation &&
+                      experience.documentation.length > 0 && (
+
+                        <div
+                          className="
+                            mt-8
+                            pt-6
+                            border-t
+                            border-neutral-700/50
+                          "
+                        >
+
+                          <div
+                            className="
+                              flex
+                              items-center
+                              justify-between
+                              mb-5
+                            "
+                          >
+
+                            <div
+                              className="
+                                flex
+                                items-center
+                                gap-3
+                              "
+                            >
+
+                              {/* ICON CONTAINER */}
+
+                              <div
+                                className="
+                                  w-9
+                                  h-9
+                                  rounded-lg
+                                  bg-purple-500/10
+                                  border
+                                  border-purple-500/20
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                              >
+
+                                <FaImages
+                                  className="
+                                    text-purple-400
+                                  "
+                                />
+
+                              </div>
+
+
+                              <h4
+                                className="
+                                  text-lg
+                                  font-semibold
+                                  text-neutral-100
+                                "
+                              >
+
+                                Documentation
+
+                              </h4>
+
+                            </div>
+
+
+                            <span
+                              className="
+                                text-xs
+                                text-neutral-500
+                              "
+                            >
+
+                              {experience.documentation.length} items
+
+                            </span>
+
+                          </div>
+
+
+                          <div
+                            className="
+                              grid
+                              grid-cols-1
+                              md:grid-cols-2
+                              lg:grid-cols-3
+                              gap-5
+                            "
+                          >
+
+                            {experience.documentation.map(
+                              (item, docIndex) => (
+
+                                <motion.button
+                                  key={docIndex}
+
+                                  type="button"
+
+                                  onClick={() =>
+                                    openDocumentation(
+                                      experience.documentation,
+                                      docIndex
+                                    )
+                                  }
+
+                                  className="
+                                    group
+                                    relative
+                                    overflow-hidden
+                                    rounded-2xl
+                                    border
+                                    border-neutral-700/50
+                                    bg-neutral-900/50
+                                    text-left
+                                  "
+
+                                  whileHover={{
+                                    y: -4,
+                                  }}
+
+                                  whileTap={{
+                                    scale: 0.98,
+                                  }}
+                                >
+
+                                  <div
+                                    className="
+                                      relative
+                                      aspect-[16/10]
+                                      overflow-hidden
+                                    "
+                                  >
+
+                                    <img
+                                      src={item.image}
+
+                                      alt={`Documentation ${
+                                        docIndex + 1
+                                      }`}
+
+                                      className="
+                                        w-full
+                                        h-full
+                                        object-cover
+                                        transition-transform
+                                        duration-500
+                                        group-hover:scale-105
+                                      "
+
+                                      loading="lazy"
+                                    />
+
+
+                                    <div
+                                      className="
+                                        absolute
+                                        inset-0
+                                        bg-black/0
+                                        group-hover:bg-black/30
+                                        transition-all
+                                        duration-300
+                                      "
+                                    />
+
+
+                                    <div
+                                      className="
+                                        absolute
+                                        inset-0
+                                        flex
+                                        items-center
+                                        justify-center
+                                        opacity-0
+                                        group-hover:opacity-100
+                                        transition-opacity
+                                        duration-300
+                                      "
+                                    >
+
+                                      <div
+                                        className="
+                                          w-12
+                                          h-12
+                                          rounded-full
+                                          bg-black/60
+                                          backdrop-blur-sm
+                                          border
+                                          border-white/20
+                                          flex
+                                          items-center
+                                          justify-center
+                                        "
+                                      >
+
+                                        <FaEye
+                                          className="
+                                            text-white
+                                          "
+                                        />
+
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                </motion.button>
+
+                              )
+                            )}
+
+                          </div>
+
+                        </div>
+
+                      )}
+
+                  </motion.div>
+
+                )
+              )}
+
+            </div>
+
+          </section>
+
+
+          {/* ====================================================
+              EDUCATION
+          ===================================================== */}
+
+          <section className="mb-16">
+
+            <div className="text-center mb-12">
+
+              <div
+                className="
+                  inline-flex
+                  items-center
+                  gap-3
+                  px-6
+                  py-3
+                  rounded-full
+                  glass-effect
+                  border
+                  border-purple-500/30
+                  mb-6
+                "
+              >
+
+                {/* ICON - SOLID PURPLE */}
+
+                <FaGraduationCap
+                  className="
+                    w-5
+                    h-5
+                    text-purple-400
+                  "
+                />
+
+                <span
+                  className="
+                    text-lg
+                    font-semibold
+                    text-neutral-300
+                  "
+                >
+
+                  Education
+
+                </span>
+
+              </div>
+
+
+              <h2
+                className="
+                  text-3xl
+                  md:text-4xl
+                  font-bold
+                  bg-gradient-to-r
+                  from-violet-400
+                  via-purple-500
+                  to-fuchsia-400
+                  bg-clip-text
+                  text-transparent
+                "
+              >
+
+                Academic Background
+
+              </h2>
+
+            </div>
+
+
+            <div
+              className="
+                grid
+                grid-cols-1
+                md:grid-cols-2
+                gap-6
+              "
             >
-              <FaDownload className="text-neutral-900 text-2xl" />
+
+              {education.map(
+                (edu, index) => (
+
+                  <motion.div
+                    key={index}
+
+                    className="
+                      glass-effect
+                      rounded-2xl
+                      p-6
+                      md:p-8
+                      border
+                      border-neutral-700/50
+                      h-full
+                    "
+
+                    initial={{
+                      opacity: 0,
+                      y: 30,
+                    }}
+
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+
+                    transition={{
+                      delay: index * 0.1,
+                    }}
+
+                    viewport={{
+                      once: true,
+                    }}
+
+                    whileHover={{
+                      y: -4,
+                    }}
+                  >
+
+                    <h3
+                      className="
+                        text-xl
+                        font-bold
+                        text-neutral-100
+                        mb-2
+                      "
+                    >
+
+                      {edu.degree}
+
+                    </h3>
+
+
+                    {/* Purple Gradient Accent */}
+
+                    <p
+                      className="
+                        font-semibold
+                        mb-3
+                        bg-gradient-to-r
+                        from-violet-400
+                        via-purple-500
+                        to-fuchsia-400
+                        bg-clip-text
+                        text-transparent
+                        inline-block
+                      "
+                    >
+
+                      {edu.institution}
+
+                    </p>
+
+
+                    <div
+                      className="
+                        flex
+                        flex-col
+                        sm:flex-row
+                        sm:justify-between
+                        gap-1
+                        text-neutral-400
+                        text-sm
+                        mb-4
+                      "
+                    >
+
+                      <span>
+                        {edu.period}
+                      </span>
+
+                      <span>
+                        {edu.location}
+                      </span>
+
+                    </div>
+
+
+                    <div className="space-y-3">
+
+                      {edu.details.map(
+                        (detail, i) => (
+
+                          <div
+                            key={i}
+
+                            className="
+                              flex
+                              items-start
+                              gap-3
+                              text-neutral-400
+                              text-sm
+                              leading-relaxed
+                            "
+                          >
+
+                            {/* SOLID PURPLE BULLET */}
+
+                            <span
+                              className="
+                                w-1.5
+                                h-1.5
+                                bg-purple-400
+                                rounded-full
+                                mt-2
+                                flex-shrink-0
+                              "
+                            />
+
+                            <span>
+                              {detail}
+                            </span>
+
+                          </div>
+
+                        )
+                      )}
+
+                    </div>
+
+
+                    {/* Education Documentation */}
+
+                    {edu.documentation &&
+                      edu.documentation.length > 0 && (
+
+                        <div
+                          className="
+                            mt-6
+                            pt-6
+                            border-t
+                            border-neutral-700/50
+                          "
+                        >
+
+                          <div
+                            className="
+                              flex
+                              items-center
+                              justify-between
+                              mb-4
+                            "
+                          >
+
+                            <div
+                              className="
+                                flex
+                                items-center
+                                gap-3
+                              "
+                            >
+
+                              <div
+                                className="
+                                  w-9
+                                  h-9
+                                  rounded-lg
+                                  bg-purple-500/10
+                                  border
+                                  border-purple-500/20
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                              >
+
+                                <FaImages
+                                  className="
+                                    text-purple-400
+                                  "
+                                />
+
+                              </div>
+
+
+                              <h4
+                                className="
+                                  text-lg
+                                  font-semibold
+                                  text-neutral-100
+                                "
+                              >
+
+                                Documentation
+
+                              </h4>
+
+                            </div>
+
+
+                            <span
+                              className="
+                                text-xs
+                                text-neutral-500
+                              "
+                            >
+
+                              {edu.documentation.length} items
+
+                            </span>
+
+                          </div>
+
+
+                          <div
+                            className="
+                              grid
+                              grid-cols-2
+                              md:grid-cols-3
+                              gap-3
+                            "
+                          >
+
+                            {edu.documentation.map(
+                              (item, docIndex) => (
+
+                                <motion.button
+                                  key={docIndex}
+
+                                  type="button"
+
+                                  onClick={() =>
+                                    openDocumentation(
+                                      edu.documentation,
+                                      docIndex
+                                    )
+                                  }
+
+                                  className="
+                                    group
+                                    relative
+                                    overflow-hidden
+                                    rounded-xl
+                                    border
+                                    border-neutral-700/50
+                                    bg-neutral-900/50
+                                  "
+
+                                  whileHover={{
+                                    y: -3,
+                                  }}
+
+                                  whileTap={{
+                                    scale: 0.98,
+                                  }}
+                                >
+
+                                  <div
+                                    className="
+                                      relative
+                                      aspect-[4/3]
+                                      overflow-hidden
+                                    "
+                                  >
+
+                                    <img
+                                      src={item.image}
+
+                                      alt={`Education documentation ${
+                                        docIndex + 1
+                                      }`}
+
+                                      className="
+                                        w-full
+                                        h-full
+                                        object-cover
+                                        transition-transform
+                                        duration-500
+                                        group-hover:scale-105
+                                      "
+
+                                      loading="lazy"
+                                    />
+
+
+                                    <div
+                                      className="
+                                        absolute
+                                        inset-0
+                                        bg-black/0
+                                        group-hover:bg-black/30
+                                        transition-all
+                                        duration-300
+                                      "
+                                    />
+
+
+                                    <div
+                                      className="
+                                        absolute
+                                        inset-0
+                                        flex
+                                        items-center
+                                        justify-center
+                                        opacity-0
+                                        group-hover:opacity-100
+                                        transition-opacity
+                                        duration-300
+                                      "
+                                    >
+
+                                      <div
+                                        className="
+                                          w-10
+                                          h-10
+                                          rounded-full
+                                          bg-black/60
+                                          backdrop-blur-sm
+                                          border
+                                          border-white/20
+                                          flex
+                                          items-center
+                                          justify-center
+                                        "
+                                      >
+
+                                        <FaEye
+                                          className="
+                                            text-white
+                                          "
+                                        />
+
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                </motion.button>
+
+                              )
+                            )}
+
+                          </div>
+
+                        </div>
+
+                      )}
+
+                  </motion.div>
+
+                )
+              )}
+
+            </div>
+
+          </section>
+
+
+          {/* ====================================================
+              ORGANIZATIONAL EXPERIENCE
+          ===================================================== */}
+
+          <section className="mb-16">
+
+            <div className="text-center mb-12">
+
+              <div
+                className="
+                  inline-flex
+                  items-center
+                  gap-3
+                  px-6
+                  py-3
+                  rounded-full
+                  glass-effect
+                  border
+                  border-purple-500/30
+                  mb-6
+                "
+              >
+
+                {/* ICON - SOLID PURPLE */}
+
+                <FaUsers
+                  className="
+                    w-5
+                    h-5
+                    text-purple-400
+                  "
+                />
+
+                <span
+                  className="
+                    text-lg
+                    font-semibold
+                    text-neutral-300
+                  "
+                >
+
+                  Organizational Experience
+
+                </span>
+
+              </div>
+
+
+              <h2
+                className="
+                  text-3xl
+                  md:text-4xl
+                  font-bold
+                  bg-gradient-to-r
+                  from-violet-400
+                  via-purple-500
+                  to-fuchsia-400
+                  bg-clip-text
+                  text-transparent
+                "
+              >
+
+                Leadership & Organization
+
+              </h2>
+
+            </div>
+
+
+            <div className="space-y-6">
+
+              {organizations.map(
+                (organization, index) => (
+
+                  <motion.div
+                    key={index}
+
+                    className="
+                      glass-effect
+                      rounded-2xl
+                      p-6
+                      md:p-8
+                      border
+                      border-neutral-700/50
+                    "
+
+                    initial={{
+                      opacity: 0,
+                      y: 30,
+                    }}
+
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+
+                    transition={{
+                      delay: index * 0.1,
+                    }}
+
+                    viewport={{
+                      once: true,
+                    }}
+
+                    whileHover={{
+                      y: -4,
+                    }}
+                  >
+
+                    <div
+                      className="
+                        flex
+                        flex-col
+                        md:flex-row
+                        md:justify-between
+                        mb-5
+                      "
+                    >
+
+                      <div>
+
+                        <h3
+                          className="
+                            text-xl
+                            font-bold
+                            text-neutral-100
+                            mb-1
+                          "
+                        >
+
+                          {organization.title}
+
+                        </h3>
+
+
+                        {/* Purple Gradient Accent */}
+
+                        <p
+                          className="
+                            font-semibold
+                            bg-gradient-to-r
+                            from-violet-400
+                            via-purple-500
+                            to-fuchsia-400
+                            bg-clip-text
+                            text-transparent
+                            inline-block
+                          "
+                        >
+
+                          {organization.organization}
+
+                        </p>
+
+                      </div>
+
+
+                      <div
+                        className="
+                          text-neutral-400
+                          text-sm
+                          mt-3
+                          md:mt-0
+                          md:text-right
+                        "
+                      >
+
+                        <p>
+                          {organization.period}
+                        </p>
+
+                        <p>
+                          {organization.location}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    <ul className="space-y-3">
+
+                      {organization.achievements.map(
+                        (achievement, i) => (
+
+                          <li
+                            key={i}
+
+                            className="
+                              text-neutral-300
+                              text-sm
+                              md:text-base
+                              flex
+                              items-start
+                              gap-3
+                            "
+                          >
+
+                            {/* SOLID PURPLE BULLET */}
+
+                            <span
+                              className="
+                                w-2
+                                h-2
+                                bg-purple-400
+                                rounded-full
+                                mt-2
+                                flex-shrink-0
+                              "
+                            />
+
+                            <span>
+                              {achievement}
+                            </span>
+
+                          </li>
+
+                        )
+                      )}
+
+                    </ul>
+
+
+                    {/* Organization Documentation */}
+
+                    {organization.documentation &&
+                      organization.documentation.length > 0 && (
+
+                        <div
+                          className="
+                            mt-6
+                            pt-6
+                            border-t
+                            border-neutral-700/50
+                          "
+                        >
+
+                          <div
+                            className="
+                              flex
+                              items-center
+                              justify-between
+                              mb-4
+                            "
+                          >
+
+                            <div
+                              className="
+                                flex
+                                items-center
+                                gap-3
+                              "
+                            >
+
+                              <div
+                                className="
+                                  w-9
+                                  h-9
+                                  rounded-lg
+                                  bg-purple-500/10
+                                  border
+                                  border-purple-500/20
+                                  flex
+                                  items-center
+                                  justify-center
+                                "
+                              >
+
+                                <FaImages
+                                  className="
+                                    text-purple-400
+                                  "
+                                />
+
+                              </div>
+
+
+                              <h4
+                                className="
+                                  text-lg
+                                  font-semibold
+                                  text-neutral-100
+                                "
+                              >
+
+                                Documentation
+
+                              </h4>
+
+                            </div>
+
+
+                            <span
+                              className="
+                                text-xs
+                                text-neutral-500
+                              "
+                            >
+
+                              {organization.documentation.length} items
+
+                            </span>
+
+                          </div>
+
+
+                          <div
+                            className="
+                              grid
+                              grid-cols-2
+                              md:grid-cols-3
+                              gap-3
+                            "
+                          >
+
+                            {organization.documentation.map(
+                              (item, docIndex) => (
+
+                                <motion.button
+                                  key={docIndex}
+
+                                  type="button"
+
+                                  onClick={() =>
+                                    openDocumentation(
+                                      organization.documentation,
+                                      docIndex
+                                    )
+                                  }
+
+                                  className="
+                                    group
+                                    relative
+                                    overflow-hidden
+                                    rounded-xl
+                                    border
+                                    border-neutral-700/50
+                                    bg-neutral-900/50
+                                  "
+
+                                  whileHover={{
+                                    y: -3,
+                                  }}
+
+                                  whileTap={{
+                                    scale: 0.98,
+                                  }}
+                                >
+
+                                  <div
+                                    className="
+                                      relative
+                                      aspect-[4/3]
+                                      overflow-hidden
+                                    "
+                                  >
+
+                                    <img
+                                      src={item.image}
+
+                                      alt={`Organization documentation ${
+                                        docIndex + 1
+                                      }`}
+
+                                      className="
+                                        w-full
+                                        h-full
+                                        object-cover
+                                        transition-transform
+                                        duration-500
+                                        group-hover:scale-105
+                                      "
+
+                                      loading="lazy"
+                                    />
+
+
+                                    <div
+                                      className="
+                                        absolute
+                                        inset-0
+                                        bg-black/0
+                                        group-hover:bg-black/30
+                                        transition-all
+                                        duration-300
+                                      "
+                                    />
+
+
+                                    <div
+                                      className="
+                                        absolute
+                                        inset-0
+                                        flex
+                                        items-center
+                                        justify-center
+                                        opacity-0
+                                        group-hover:opacity-100
+                                        transition-opacity
+                                        duration-300
+                                      "
+                                    >
+
+                                      <div
+                                        className="
+                                          w-10
+                                          h-10
+                                          rounded-full
+                                          bg-black/60
+                                          backdrop-blur-sm
+                                          border
+                                          border-white/20
+                                          flex
+                                          items-center
+                                          justify-center
+                                        "
+                                      >
+
+                                        <FaEye
+                                          className="
+                                            text-white
+                                          "
+                                        />
+
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                </motion.button>
+
+                              )
+                            )}
+
+                          </div>
+
+                        </div>
+
+                      )}
+
+                  </motion.div>
+
+                )
+              )}
+
+            </div>
+
+          </section>
+
+
+          {/* ====================================================
+              FEATURED CERTIFICATIONS & RECOGNITION
+          ===================================================== */}
+
+          <section className="mb-16">
+
+            <Certifications
+              featuredOnly={true}
+            />
+
+          </section>
+
+
+        </div>
+
+      </section>
+
+
+      {/* ============================================================
+          DOCUMENTATION IMAGE MODAL
+      ============================================================= */}
+
+      <AnimatePresence>
+
+        {selectedImage && (
+
+          <motion.div
+            className="
+              fixed
+              inset-0
+              z-[9999]
+              bg-black/90
+              backdrop-blur-md
+              flex
+              items-center
+              justify-center
+              p-4
+              md:p-8
+            "
+
+            initial={{
+              opacity: 0,
+            }}
+
+            animate={{
+              opacity: 1,
+            }}
+
+            exit={{
+              opacity: 0,
+            }}
+
+            onClick={
+              closeDocumentation
+            }
+          >
+
+            <motion.div
+              className="
+                relative
+                w-full
+                max-w-6xl
+                max-h-[95vh]
+                flex
+                flex-col
+              "
+
+              initial={{
+                opacity: 0,
+                scale: 0.95,
+                y: 20,
+              }}
+
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }}
+
+              exit={{
+                opacity: 0,
+                scale: 0.95,
+                y: 20,
+              }}
+
+              transition={{
+                duration: 0.25,
+              }}
+
+              onClick={(event) =>
+                event.stopPropagation()
+              }
+            >
+
+
+              {/* ==================================================
+                  CLOSE BUTTON
+              ================================================== */}
+
+              <button
+                type="button"
+
+                onClick={
+                  closeDocumentation
+                }
+
+                className="
+                  absolute
+                  -top-12
+                  right-0
+                  md:-right-2
+                  w-10
+                  h-10
+                  rounded-full
+                  bg-neutral-800/90
+                  border
+                  border-neutral-700
+                  flex
+                  items-center
+                  justify-center
+                  text-neutral-300
+                  hover:text-white
+                  hover:bg-purple-600/30
+                  transition-all
+                  z-20
+                "
+
+                aria-label="Close documentation"
+              >
+
+                <FaTimes />
+
+              </button>
+
+
+              {/* ==================================================
+                  IMAGE CONTAINER
+              ================================================== */}
+
+              <div
+                className="
+                  relative
+                  bg-neutral-950
+                  rounded-2xl
+                  overflow-hidden
+                  border
+                  border-purple-500/20
+                "
+              >
+
+                <img
+                  src={selectedImage.image}
+
+                  alt="Portfolio documentation"
+
+                  className="
+                    w-full
+                    max-h-[75vh]
+                    object-contain
+                  "
+                />
+
+
+                {/* Previous Button */}
+
+                {selectedDocumentation.length >
+                  1 && (
+
+                  <button
+                    type="button"
+
+                    onClick={
+                      previousImage
+                    }
+
+                    className="
+                      absolute
+                      left-4
+                      top-1/2
+                      -translate-y-1/2
+                      w-11
+                      h-11
+                      md:w-12
+                      md:h-12
+                      rounded-full
+                      bg-black/60
+                      backdrop-blur-sm
+                      border
+                      border-purple-400/20
+                      flex
+                      items-center
+                      justify-center
+                      text-purple-300
+                      hover:bg-purple-600/30
+                      hover:text-white
+                      transition-all
+                    "
+
+                    aria-label="Previous image"
+                  >
+
+                    <FaChevronLeft />
+
+                  </button>
+
+                )}
+
+
+                {/* Next Button */}
+
+                {selectedDocumentation.length >
+                  1 && (
+
+                  <button
+                    type="button"
+
+                    onClick={
+                      nextImage
+                    }
+
+                    className="
+                      absolute
+                      right-4
+                      top-1/2
+                      -translate-y-1/2
+                      w-11
+                      h-11
+                      md:w-12
+                      md:h-12
+                      rounded-full
+                      bg-black/60
+                      backdrop-blur-sm
+                      border
+                      border-purple-400/20
+                      flex
+                      items-center
+                      justify-center
+                      text-purple-300
+                      hover:bg-purple-600/30
+                      hover:text-white
+                      transition-all
+                    "
+
+                    aria-label="Next image"
+                  >
+
+                    <FaChevronRight />
+
+                  </button>
+
+                )}
+
+              </div>
+
+
+              {/* ==================================================
+                  IMAGE INFORMATION
+              ================================================== */}
+
+              <div
+                className="
+                  mt-4
+                  flex
+                  items-center
+                  justify-between
+                  bg-neutral-900/95
+                  border
+                  border-purple-500/20
+                  rounded-2xl
+                  px-5
+                  py-4
+                "
+              >
+
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-3
+                  "
+                >
+
+                  {/* SOLID PURPLE ICON */}
+
+                  <FaImages
+                    className="
+                      text-purple-400
+                    "
+                  />
+
+                  <span
+                    className="
+                      text-sm
+                      text-neutral-300
+                    "
+                  >
+
+                    Documentation
+
+                  </span>
+
+                </div>
+
+
+                {selectedDocumentation.length >
+                  1 && (
+
+                  <div
+                    className="
+                      text-neutral-500
+                      text-sm
+                      whitespace-nowrap
+                    "
+                  >
+
+                    {selectedImageIndex + 1}
+
+                    {" / "}
+
+                    {selectedDocumentation.length}
+
+                  </div>
+
+                )}
+
+              </div>
+
+
+              {/* ==================================================
+                  THUMBNAIL NAVIGATION
+              ================================================== */}
+
+              {selectedDocumentation.length >
+                1 && (
+
+                <div
+                  className="
+                    flex
+                    justify-center
+                    gap-2
+                    mt-4
+                    overflow-x-auto
+                    pb-2
+                  "
+                >
+
+                  {selectedDocumentation.map(
+                    (item, index) => (
+
+                      <button
+                        key={index}
+
+                        type="button"
+
+                        onClick={() => {
+
+                          setSelectedImageIndex(
+                            index
+                          );
+
+                          setSelectedImage(
+                            item
+                          );
+
+                        }}
+
+                        className={`
+                          relative
+                          flex-shrink-0
+                          w-16
+                          h-12
+                          rounded-lg
+                          overflow-hidden
+                          border-2
+                          transition-all
+                          ${
+                            index ===
+                            selectedImageIndex
+                              ? "border-purple-400 scale-105"
+                              : "border-neutral-700 opacity-60 hover:opacity-100"
+                          }
+                        `}
+                      >
+
+                        <img
+                          src={item.image}
+
+                          alt={`Thumbnail ${
+                            index + 1
+                          }`}
+
+                          className="
+                            w-full
+                            h-full
+                            object-cover
+                          "
+                        />
+
+                      </button>
+
+                    )
+                  )}
+
+                </div>
+
+              )}
+
             </motion.div>
 
-            <h3 className="text-3xl font-bold text-neutral-100 mb-4">
-              Ready to collaborate?
-            </h3>
-
-            <p className="text-neutral-400 text-lg mb-8 max-w-2xl mx-auto">
-              Download my full resume for detailed information about my experience, 
-              projects, and technical skills. Let's build something amazing together!
-            </p>
-
-            <motion.button
-              onClick={handleDownloadPDF}
-              className="btn-primary inline-flex items-center gap-3 px-8 py-4 text-lg"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              viewport={{ once: true }}
-            >
-              <FaDownload />
-              Get My Resume
-            </motion.button>
           </motion.div>
-        </div>
-      </section>
+
+        )}
+
+      </AnimatePresence>
+
     </>
-  )
+  );
 }
 
-export default Resume
+
+export default Resume;

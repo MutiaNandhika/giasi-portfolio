@@ -1,66 +1,214 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-const SEOHead = ({ 
-  title = "GiaSi Dev Portfolio - Full Stack Developer",
-  description = "Professional Full Stack Developer specializing in Java, Spring Boot, React, and modern web technologies.",
-  keywords = "portfolio, full stack developer, java developer, react developer, spring boot, javascript, web development",
+const SEOHead = ({
+  title = "Mutia Nandhika's Portfolio",
+
+  description =
+    "Welcome to Mutia Nandhika's portfolio. Explore selected projects, experience, skills, and digital work.",
+
+  keywords =
+    "Mutia Nandhika, portfolio, UI/UX Design, Software Engineering, Graphic Design, Figma, Laravel, PHP, JavaScript, Vue.js, Flutter, MySQL, Web Development",
+
   image = "/logo.png",
-  url = "https://giasinguyen.vercel.app/",
-  type = "website"
+
+  url = "https://portfolio-mutia-nandhika.vercel.app/",
+
+  type = "website",
 }) => {
   useEffect(() => {
-    // Update document title
+    // ============================================================
+    // DOCUMENT TITLE
+    // ============================================================
+
     document.title = title;
 
-    // Update meta tags
-    const updateMetaTag = (name, content, property = false) => {
-      const selector = property ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+    // ============================================================
+    // META TAG HELPER
+    // ============================================================
+
+    const updateMetaTag = (
+      name,
+      content,
+      property = false
+    ) => {
+      const selector = property
+        ? `meta[property="${name}"]`
+        : `meta[name="${name}"]`;
+
       let meta = document.querySelector(selector);
-      
+
       if (meta) {
-        meta.setAttribute('content', content);
+        meta.setAttribute("content", content);
       } else {
-        meta = document.createElement('meta');
+        meta = document.createElement("meta");
+
         if (property) {
-          meta.setAttribute('property', name);
+          meta.setAttribute("property", name);
         } else {
-          meta.setAttribute('name', name);
+          meta.setAttribute("name", name);
         }
-        meta.setAttribute('content', content);
+
+        meta.setAttribute("content", content);
+
         document.head.appendChild(meta);
       }
     };
 
-    // Update basic meta tags
-    updateMetaTag('description', description);
-    updateMetaTag('keywords', keywords);
-    
-    // Update Open Graph tags
-    updateMetaTag('og:title', title, true);
-    updateMetaTag('og:description', description, true);
-    updateMetaTag('og:image', image, true);
-    updateMetaTag('og:url', url, true);
-    updateMetaTag('og:type', type, true);
-    
-    // Update Twitter tags
-    updateMetaTag('twitter:title', title, true);
-    updateMetaTag('twitter:description', description, true);
-    updateMetaTag('twitter:image', image, true);
-    updateMetaTag('twitter:url', url, true);
+    // ============================================================
+    // BASIC SEO
+    // ============================================================
 
-    // Update canonical link
-    let canonical = document.querySelector('link[rel="canonical"]');
+    updateMetaTag(
+      "description",
+      description
+    );
+
+    updateMetaTag(
+      "keywords",
+      keywords
+    );
+
+    updateMetaTag(
+      "author",
+      "Mutia Nandhika"
+    );
+
+    updateMetaTag(
+      "robots",
+      "index, follow"
+    );
+
+    updateMetaTag(
+      "language",
+      "English"
+    );
+
+    // ============================================================
+    // OPEN GRAPH / FACEBOOK
+    // ============================================================
+
+    updateMetaTag(
+      "og:type",
+      type,
+      true
+    );
+
+    updateMetaTag(
+      "og:url",
+      url,
+      true
+    );
+
+    updateMetaTag(
+      "og:title",
+      title,
+      true
+    );
+
+    updateMetaTag(
+      "og:description",
+      description,
+      true
+    );
+
+    updateMetaTag(
+      "og:image",
+      image,
+      true
+    );
+
+    updateMetaTag(
+      "og:site_name",
+      "Mutia Nandhika's Portfolio",
+      true
+    );
+
+    // ============================================================
+    // TWITTER / X
+    // ============================================================
+
+    updateMetaTag(
+      "twitter:card",
+      "summary_large_image"
+    );
+
+    updateMetaTag(
+      "twitter:url",
+      url
+    );
+
+    updateMetaTag(
+      "twitter:title",
+      title
+    );
+
+    updateMetaTag(
+      "twitter:description",
+      description
+    );
+
+    updateMetaTag(
+      "twitter:image",
+      image
+    );
+
+    // ============================================================
+    // THEME COLOR
+    // ============================================================
+
+    updateMetaTag(
+      "theme-color",
+      "#0a0a0a"
+    );
+
+    updateMetaTag(
+      "msapplication-TileColor",
+      "#0a0a0a"
+    );
+
+    // ============================================================
+    // CANONICAL URL
+    // ============================================================
+
+    let canonical =
+      document.querySelector(
+        'link[rel="canonical"]'
+      );
+
     if (canonical) {
-      canonical.setAttribute('href', url);
+      canonical.setAttribute(
+        "href",
+        url
+      );
     } else {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      canonical.setAttribute('href', url);
-      document.head.appendChild(canonical);
-    }
-  }, [title, description, keywords, image, url, type]);
+      canonical =
+        document.createElement("link");
 
-  return null; // This component doesn't render anything
+      canonical.setAttribute(
+        "rel",
+        "canonical"
+      );
+
+      canonical.setAttribute(
+        "href",
+        url
+      );
+
+      document.head.appendChild(
+        canonical
+      );
+    }
+
+  }, [
+    title,
+    description,
+    keywords,
+    image,
+    url,
+    type,
+  ]);
+
+  return null;
 };
 
 export default SEOHead;
