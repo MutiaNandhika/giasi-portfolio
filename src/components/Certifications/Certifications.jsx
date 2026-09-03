@@ -39,7 +39,7 @@ import {
  * CERTIFICATIONS DATA
  * ============================================================
  *
- * Total: 21 Certifications / Achievements
+ * Total: 40 Certifications / Achievements
  *
  * Categories:
  * - organization
@@ -148,6 +148,461 @@ const CERTIFICATIONS_DATA = [
       },],
   },
 
+
+  {
+    id: 22,
+
+    name:
+      "Belajar Membuat Front-End Web untuk Pemula",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "August 24, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/belajarmembuatfe.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 23,
+
+    name:
+      "Belajar Pengembangan Web Intermediate",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "August 25, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/belajarpengembanganwebintermediate.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 24,
+
+    name:
+      "Canva for Design",
+
+    issuer:
+      "MySkill",
+
+    year:
+      "September 3, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/canvamyskill.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 25,
+
+    name:
+      "JavaScript Essentials 1",
+
+    issuer:
+      "Cisco Networking Academy",
+
+    year:
+      "September 2, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/ciscojavascript.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 26,
+
+    name:
+      "Python Essentials 1",
+
+    issuer:
+      "Cisco Networking Academy",
+
+    year:
+      "September 2, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/ciscopython.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 27,
+
+    name:
+      "Belajar Back-End Pemula dengan JavaScript",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "August 25, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/belajarbackendpemula.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 28,
+
+    name:
+      "Belajar Dasar Cloud dan Gen AI di AWS",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "August 25, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/belajardasarcloud.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 29,
+
+    name:
+      "Belajar Dasar Pemrograman JavaScript",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "August 24, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/belajardasarjava.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 30,
+
+    name:
+      "Belajar Dasar Pemrograman Web",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "August 24, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/belajardasarpemrogramanweb.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 31,
+
+    name:
+      "Belajar Fundamental Front-End Web Development",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "August 25, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/belajarfundamentalfrontend.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 32,
+
+    name:
+      "TOEFL Prediction Test",
+
+    issuer:
+      "Central Course",
+
+    year:
+      "August 29, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/testtoefl1.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 33,
+
+    name:
+      "Test of English Proficiency and Academic (TOEFL Test)",
+
+    issuer:
+      "ElSkill English Course",
+
+    year:
+      "September 2, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/testtoefl2.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 34,
+
+    name:
+      "User Interface Design",
+
+    issuer:
+      "MySkill",
+
+    year:
+      "September 3, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/userinterfacemyskill.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 35,
+
+    name:
+      "User Experience Design",
+
+    issuer:
+      "MySkill",
+
+    year:
+      "September 3, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/uxmyskill.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 36,
+
+    name:
+      "Figma for UI/UX Design",
+
+    issuer:
+      "MySkill",
+
+    year:
+      "September 3, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/figmaforuiuxmyskill.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 37,
+
+    name:
+      "Graphic Design Fundamental",
+
+    issuer:
+      "MySkill",
+
+    year:
+      "September 3, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/graphicdesignmyskill.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 38,
+
+    name:
+      "User Experience Design Fundamentals",
+
+    issuer:
+      "IBM SkillsBuild",
+
+    year:
+      "September 1, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/ibmux.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 39,
+
+    name:
+      "Belajar Menjadi Node.js Application Developer",
+
+    issuer:
+      "Dicoding Indonesia",
+
+    year:
+      "Date not shown",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/menjadinodejs.jpg",
+      },
+    ],
+  },
+
+
+  {
+    id: 40,
+
+    name:
+      "Python Introduction for Data Analysis",
+
+    issuer:
+      "MySkill",
+
+    year:
+      "August 21, 2026",
+
+    category:
+      "course",
+
+    documentation: [
+      {
+        image:
+          "/certifications/scpythonmyskill.jpg",
+      },
+    ],
+  },
 
   // ============================================================
   // WORK
