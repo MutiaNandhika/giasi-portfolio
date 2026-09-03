@@ -618,7 +618,7 @@ const CERTIFICATIONS_DATA = [
       "PT Rasa Aksata Nusantara",
 
     year:
-      "August 1 – November 30, 2025",
+      "August 1 – Dec 8, 2025",
 
     category:
       "work",
