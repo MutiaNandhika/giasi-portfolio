@@ -567,7 +567,7 @@ const CERTIFICATIONS_DATA = [
       "Dicoding Indonesia",
 
     year:
-      "Date not shown",
+      "August 25, 2026",
 
     category:
       "course",
