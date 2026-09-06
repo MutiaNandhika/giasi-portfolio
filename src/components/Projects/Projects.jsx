@@ -98,6 +98,10 @@ function Projects() {
         value: "frontend",
         label: "Frontend",
       },
+      {
+        value: "mobile",
+        label: "Mobile",
+      },
     ],
     []
   );
@@ -1064,6 +1068,12 @@ function ProjectCard({
   const getProjectIcon = () => {
 
     if (
+      projectCategories.includes("mobile")
+    ) {
+      return <FaMobileAlt />;
+    }
+
+    if (
       projectCategories.includes("uiux")
     ) {
       return <FaPalette />;
@@ -1075,7 +1085,7 @@ function ProjectCard({
       return <FaCode />;
     }
 
-    return <FaMobileAlt />;
+    return <FaCode />;
 
   };
 
@@ -1092,6 +1102,10 @@ function ProjectCard({
 
     if (category === "frontend") {
       return "Frontend";
+    }
+
+    if (category === "mobile") {
+      return "Mobile";
     }
 
     if (category === "backend") {
@@ -1540,6 +1554,10 @@ function ProjectDetailModal({
 
     if (category === "frontend") {
       return "Frontend";
+    }
+
+    if (category === "mobile") {
+      return "Mobile";
     }
 
     if (category === "backend") {

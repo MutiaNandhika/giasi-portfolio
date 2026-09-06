@@ -125,29 +125,78 @@
     "prototypeUrl": "https://www.figma.com/proto/ryWYqgb8D4MHDLCSTyGSoI/Flutix-App?node-id=1-2&p=f&t=EmFB2CQEdgVFWfs8-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2",
     "documentUrl": null
   },
+
   {
     "id": 7,
-    "title": "SIREK",
-    "category": ["uiux", "frontend"],
+    "title": "Sistem Informasi Open Recruitment Kepanitiaan (SIREK) BEM Unsoed Berbasis Web",
+    "category": ["frontend"],
     "period": "Jun 2024",
-    "role": "UI/UX Designer & Frontend Developer",
-    "description": "A web-based open recruitment system for BEM Unsoed designed to support committee recruitment through registration forms, recruitment announcements, and an admin dashboard. The project combines UI/UX design with frontend and backend implementation using Laravel, Inertia.js, Vue.js, and MySQL.",
+    "role": "Frontend Developer",
+    "description": "A web-based open recruitment system for BEM Unsoed designed to streamline committee recruitment through event information, registration forms, recruitment announcements, and an administrative dashboard. The system was developed using Laravel, Inertia.js, Vue.js, and MySQL.",
     "tags": [
       "UI/UX Design",
       "Figma",
       "Laravel",
       "Inertia.js",
       "Vue.js",
+      "MySQL",
+      "Web Application",
       "Dashboard"
+    ],
+    "image": "/projects/sirekweb.png",
+    "featured": true,
+    "githubUrl": "https://github.com/MutiaNandhika/sirek",
+    "prototypeUrl": null,
+    "documentUrl": "/documents/sirekweb.pdf"
+  },
+
+  {
+    "id": 8,
+    "title": "Sistem Informasi Open Recruitment Kepanitiaan (SIREK) BEM Unsoed Berbasis Mobile",
+    "category": ["mobile"],
+    "period": "Dec 2024",
+    "role": "Mobile Developer",
+    "description": "A mobile-based open recruitment information system for BEM Unsoed designed to make committee recruitment and event information more accessible to students. The application focuses on improving recruitment efficiency, information dissemination, and student participation through a mobile platform.",
+    "tags": [
+      "Mobile Development",
+      "Mobile App",
+      "SIREK",
+      "Open Recruitment",
+      "BEM Unsoed",
+      "Information System"
+    ],
+    "image": "/projects/sirekmobile.png",
+    "featured": true,
+    "githubUrl": "https://github.com/MutiaNandhika/sirek-mobile",
+    "prototypeUrl": null,
+    "documentUrl": "/documents/sirekmobile.pdf"
+  },
+
+  {
+    "id": 9,
+    "title": "Sistem Informasi Open Recruitment Kepanitiaan (SIREK) BEM Unsoed UI/UX Design",
+    "category": ["uiux"],
+    "period": "Jun 2024",
+    "role": "UI/UX Designer",
+    "description": "A UI/UX design project for SIREK BEM Unsoed focused on designing an intuitive and accessible open recruitment experience. The design covers the user flow from discovering events and viewing event details to completing registration and checking recruitment announcements.",
+    "tags": [
+      "UI/UX Design",
+      "Figma",
+      "User Flow",
+      "Wireframe",
+      "Prototype",
+      "Information Architecture",
+      "Usability"
     ],
     "image": "/projects/sirek.jpg",
     "featured": true,
-    "githubUrl": "https://github.com/MutiaNandhika/sirek",
-    "prototypeUrl": "https://www.figma.com/proto/dBEdfdnHLiy3dYG3f44OjO/IMK-Prototype?node-id=373-609&p=f&t=BKnryi8nlKxoZmNR-1&scaling=min-zoom&content-scaling=fixed&page-id=370%3A441&starting-point-node-id=373%3A609&show-proto-sidebar=1",
-    "documentUrl": "/documents/sirek.pdf"
+    "githubUrl": null,
+    "prototypeUrl": "https://www.figma.com/proto/dBEdfdnHLiy3dYG3f44OjO/IMK-Prototype?node-id=373-609&p=f&t=VucpzhBhWc3ydkeK-1&scaling=min-zoom&content-scaling=fixed&page-id=370%3A441&starting-point-node-id=373%3A609&show-proto-sidebar=1",
+    "documentUrl": "/documents/sirekimk.pdf"
   },
+
   {
-    "id": 8,
+    "id": 10,
     "title": "Disney Website",
     "category": ["uiux"],
     "period": "Nov 2023",
@@ -168,7 +217,7 @@
     "documentUrl": null
   },
   {
-    "id": 9,
+    "id": 11,
     "title": "Barterin",
     "category": ["uiux"],
     "period": "Jun 2025",
@@ -189,7 +238,7 @@
     "documentUrl": "/documents/barterin.pdf"
   },
   {
-    "id": 10,
+    "id": 12,
     "title": "BarTani",
     "category": ["uiux"],
     "period": "Aug 2025",
@@ -210,7 +259,7 @@
     "documentUrl": "/documents/bartani.pdf"
   },
   {
-    "id": 11,
+    "id": 13,
     "title": "GoldenActivities",
     "category": ["frontend"],
     "period": "2024",
@@ -231,7 +280,7 @@
     "documentUrl": "/documents/goldenactivities.pdf"
   },
   {
-    "id": 12,
+    "id": 14,
     "title": "Plant Society",
     "category": ["frontend"],
     "period": "2023",
@@ -252,7 +301,7 @@
     "documentUrl": "/documents/plantsociety.pdf"
   },
   {
-    "id": 13,
+    "id": 15,
     "title": "SosmedCare",
     "category": ["frontend"],
     "period": "2025",
@@ -273,7 +322,7 @@
     "documentUrl": "/documents/sosmedcare.pdf"
   },
   {
-    "id": 14,
+    "id": 16,
     "title": "Outsourcing Recruitment System",
     "category": ["frontend"],
     "period": "2025 – 2026",
@@ -292,5 +341,74 @@
     "githubUrl": "https://github.com/MutiaNandhika/Sistem-Rekrutmen",
     "prototypeUrl": null,
     "documentUrl": "/documents/skripsi.pdf"
+  },
+  {
+    "id": 17,
+    "title": "EduHub – Learning Management System",
+    "category": ["frontend"],
+    "period": "2026",
+    "role": "Frontend Developer",
+    "description": "A modern full-stack online learning platform built with Laravel 11, Vue 3, Inertia.js, and Tailwind CSS. Features interactive course exploration, structured curriculum modules, video player, server-evaluated quizzes, and cryptographically verifiable digital certificates.",
+    "tags": [
+      "Laravel 11",
+      "Vue 3",
+      "Inertia.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "PHP",
+      "LMS",
+      "E-Learning"
+    ],
+    "image": "/projects/eduhub.png",
+    "featured": true,
+    "githubUrl": "https://github.com/MutiaNandhika/eduhub-lms",
+    "prototypeUrl": null,
+    "documentUrl": null
+  },
+  {
+    "id": 18,
+    "title": "PooPals – Couple Wellness Partner",
+    "category": ["frontend"],
+    "period": "2026",
+    "role": "Frontend Developer",
+    "description": "A private couple wellness web application built with Next.js, TypeScript, Tailwind CSS, and Supabase. Features bowel movement tracking with the clinical Bristol Stool Scale, daily hydration logging, mood/energy vibe tracking, physical activity rings, couple streaks, cheer reactions, and granular privacy controls.",
+    "tags": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "PostgreSQL",
+      "Recharts",
+      "Wellness App"
+    ],
+    "image": "/projects/poopals.png",
+    "featured": true,
+    "githubUrl": "https://github.com/MutiaNandhika/poopals-wellness",
+    "prototypeUrl": null,
+    "documentUrl": null
+  },
+  {
+    "id": 19,
+    "title": "Finora – Personal Finance Management",
+    "category": ["frontend"],
+    "period": "2026",
+    "role": "Frontend Developer",
+    "description": "A modern personal finance SaaS application built with Next.js, TypeScript, Tailwind CSS, and Supabase. Designed to help users track income and expense transactions, manage monthly category budgets, set savings goals, and visualize cashflow trends with interactive Recharts analytics and dark/light mode.",
+    "tags": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "PostgreSQL",
+      "Recharts",
+      "Personal Finance"
+    ],
+    "image": "/projects/finora.png",
+    "featured": true,
+    "githubUrl": "https://github.com/MutiaNandhika/finora-personalfinance",
+    "prototypeUrl": "https://finora-personalfinance.vercel.app/",
+    "documentUrl": null
   }
 ]

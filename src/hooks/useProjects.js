@@ -15,7 +15,13 @@ export const useProjects = (filter = 'all') => {
     if (!Array.isArray(projects)) return [];
     return filter === 'all' 
       ? projects 
-      : projects.filter(project => project && project.category === filter);
+      : projects.filter((project) => {
+          if (!project) return false;
+          if (Array.isArray(project.category)) {
+            return project.category.includes(filter);
+          }
+          return project.category === filter;
+        });
   }, [projects, filter]);
 
   return {
@@ -38,7 +44,10 @@ export const getProjectCategories = (projects) => {
 
   const categoriesMap = projects.reduce((acc, project) => {
     if (project && project.category) {
-      acc[project.category] = (acc[project.category] || 0) + 1;
+      const cats = Array.isArray(project.category) ? project.category : [project.category];
+      cats.forEach((cat) => {
+        acc[cat] = (acc[cat] || 0) + 1;
+      });
     }
     return acc;
   }, {});
@@ -48,9 +57,11 @@ export const getProjectCategories = (projects) => {
   ];
 
   const categoryLabels = {
+    uiux: 'UI/UX',
     fullstack: 'Full Stack',
     frontend: 'Frontend',
-    backend: 'Backend'
+    backend: 'Backend',
+    mobile: 'Mobile'
   };
 
   Object.entries(categoriesMap).forEach(([category, count]) => {
